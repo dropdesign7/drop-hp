@@ -1,0 +1,59 @@
+/* Drop. ブランドトークン
+   自動生成：my-brand/build-tokens.py が brand.json から出力
+   直接編集しない。直すのは brand.json */
+:root{
+  /* --- color --- */
+  --c-main:       #2BA795;   /* メイン：ドロップティール */
+  --c-main-deep:  #12574D;   /* メインの押下色：ディープティール */
+  --c-sub:        #FFFFFF;   /* サブ1（地）：ホワイト */
+  --c-sub2:       #F4F7F9;   /* サブ2（面の切り替え）：ミストグレー */
+  --c-accent:     #1B1B1B;   /* アクセント1（文字・引き締め）：インクブラック */
+  --c-accent2:    #F2B98C;   /* アクセント2（世界観の差し色）：ラビットオレンジ */
+  --c-cta:        #F2683C;   /* CTA専用（押させたい一点）：CTAオレンジ */
+
+  /* --- 面の上に乗るもの --- */
+  --c-on-main:    #1B1B1B;   /* ティール面の文字 */
+  --c-on-cta:     #FFFFFF;   /* CTA面の文字 */
+  --c-card:       #FFFFFF;   /* カード面 */
+  --c-overlay:    rgba(255,255,255,.94);   /* 追従バーの地 */
+  --c-muted:      #6E7781;   /* 補足テキスト */
+  --c-hairline:   rgba(27,27,27,.13);   /* 罫線 */
+
+  /* --- font --- */
+  --ff-base: "Noto Sans JP", sans-serif;
+  --ff-display: "Poppins", sans-serif;
+  --ff-serif: "Noto Serif JP", serif;
+
+  /* --- scale (sp) --- */
+  --fs-hero: 40px;
+  --fs-h2:   24px;
+  --fs-body: 16px;
+  --lh-body: 2.0;
+  --lh-hero: 1.45;
+
+  /* --- 字間：和文は少し開けると品が出る --- */
+  --ls-hero:  0.04em;
+  --ls-h2:    0.03em;
+  --ls-body:  0.02em;
+  --ls-cta:   0.05em;
+
+  /* --- spacing (sp) --- */
+  --sp-block: 96px;
+  --sp-cta:   144px;
+  --w-max:    1080px;
+  --w-text:   640px;
+}
+
+@media (min-width:768px){
+  :root{
+    --fs-hero: 60px;
+    --fs-h2:   32px;
+    --fs-body: 17px;
+    --sp-block: 160px;
+    --sp-cta:   240px;
+  }
+}
+
+/* このサイトは常に白地で見せる（2026-11-14 コウノさん指定）。
+   my-brand/dist/tokens.css にあるダーク用の上書きは、この複製には入れていない */
+
