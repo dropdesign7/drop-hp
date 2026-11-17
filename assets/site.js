@@ -16,8 +16,8 @@ document.querySelectorAll('.dot').forEach((dot) => {
   if (!photo || !chara) return;
   // 写真の画素で見た、キャラクターの枠（左・上・幅・高さ）
   const spots = {
-    pc: { iw: 2508, ih: 1411, box: [214, 61, 443, 835] },
-    sp: { iw: 1200, ih: 2400, box: [290, 1220, 332, 626] },
+    pc: { iw: 2508, ih: 1411, box: [470, 512, 391, 736] },
+    sp: { iw: 1024, ih: 2048, box: [210, 1191, 277, 522] },
   };
   const place = () => {
     const s = (photo.currentSrc || photo.src).includes('mobile') ? spots.sp : spots.pc;

@@ -73,6 +73,9 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
    スマホは縦長の専用画像（kv-mobile.webp）を敷き、上の空に言葉、下にキャラクターとボタン */
 .hero{position:relative;background:var(--c-sub2);color:var(--c-on-main);display:flex;flex-direction:column;overflow:hidden;min-height:100svh}
 .hero .head{position:relative;z-index:2}
+/* 実験室の写真は上の方がにぎやかなので、ロゴとメニューの下に薄い白のぼかしを敷いて読みやすくする */
+.hero::after{content:"";position:absolute;inset:0 0 auto 0;height:150px;z-index:0;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(255,255,255,.82) 0,rgba(255,255,255,.55) 70px,rgba(255,255,255,0) 150px)}
 /* キャラクター：背景写真とは別の部品。位置は site.js が写真の切り抜きに合わせて決める。
    ページを開くとふわっと現れ、差し出した手で「どうぞ」とゆっくり招く */
 .hero__chara{position:absolute;opacity:0;pointer-events:none}
@@ -101,6 +104,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .hero__lead{margin-top:8px;max-width:30em;font-size:15px;line-height:1.85}
 @media (max-height:699px) and (max-width:899px){.hero__lead{display:none}}   /* 背の低い画面では、絵にかからないようリード文を省く */
 .hero__cta{margin-top:auto}
+.hero .btn--cta,.hero .btn--cta:active{color:#fff}   /* トップのボタンは白抜き */
 .hero .btn-note{font-size:12px;margin-top:8px}
 .hero__row{display:flex;align-items:flex-end;gap:16px}
 .hero__row .btn{white-space:nowrap}
@@ -116,14 +120,17 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 }
 @media (min-width:900px){
   .hero .head{position:absolute;inset:0 0 auto 0}
-  .hero__photo{object-position:0% 0%}
+  .hero__photo{object-position:0% 100%}   /* 実験室の床（キャラクターの足もと）を切らない */
   .hero__panel,.hero__copy{display:block}
   .hero__lead{font-size:inherit;line-height:inherit;margin-top:var(--sp-sm)}
   .hero .btn-note{font-size:13px;margin-top:14px}
   /* 言葉のかたまりはグリッドから外し、画面の右端に寄せる（2026-11-14 コウノさん指定）。
      幅は「DROP」の字幅にそろえ、コピーもその幅で折り返す */
-  .hero{--word:clamp(130px,min(15.5vw,27svh),280px)}
-  .hero__main{flex-direction:row;justify-content:flex-end;align-items:center;max-width:none;padding-block:96px 40px}
+  /* 文字のかたまりは、写真の棚の右端（写真の幅の約49%）から 6vw 以上離す（2026-11-17 コウノさん指定）。
+     写真は画面いっぱいに拡大されるので、棚の右端は「横幅の49.3%」か「高さの87.7%」の大きいほう */
+  .hero{--shelf:max(49.3vw,87.7svh);--edge:clamp(24px,3.5vw,64px);--room:calc(100vw - var(--shelf) - 6vw - var(--edge));
+        --word:clamp(110px,min(15.5vw,27svh,calc(var(--room) / 2.6)),280px)}
+  .hero__main{flex-direction:row;justify-content:flex-end;align-items:center;max-width:none;padding-block:96px 40px;padding-right:var(--edge)}
   .hero__panel{width:calc(var(--word)*2.6);flex:none}
   .hero__word{font-size:var(--word)}
   .hero h1{font-size:clamp(26px,2.5vw,36px)}
