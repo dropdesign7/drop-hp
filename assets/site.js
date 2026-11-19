@@ -17,10 +17,12 @@ document.querySelectorAll('.dot').forEach((dot) => {
   // 写真の画素で見た、キャラクターの枠（左・上・幅・高さ）
   const spots = {
     pc: { iw: 2508, ih: 1411, box: [470, 512, 391, 736] },
-    sp: { iw: 1024, ih: 2048, box: [210, 1191, 277, 522] },
+    sp: { iw: 1024, ih: 2048, box: [645, 1191, 277, 522] },   // スマホ：棚の右、床の上
+    tab: { iw: 1024, ih: 2048, box: [210, 1191, 277, 522] },  // タブレット：右に文字があるので棚の前
   };
   const place = () => {
-    const s = (photo.currentSrc || photo.src).includes('mobile') ? spots.sp : spots.pc;
+    const src = photo.currentSrc || photo.src;
+    const s = src.includes('mobile-r') ? spots.sp : src.includes('mobile') ? spots.tab : spots.pc;
     const cw = photo.clientWidth, ch = photo.clientHeight;
     if (!cw || !ch) return;
     const k = Math.max(cw / s.iw, ch / s.ih);
