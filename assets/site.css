@@ -294,6 +294,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 /* 実績の詳細：LP は縦の画像をすき間なくつなげ、スマホで見る幅にそろえる */
 .mat--lp{display:block;padding-block:var(--sp-lg)}
 .mat--lp img{display:block;width:100%;max-width:420px;height:auto;margin-inline:auto}
+.mat--pc img{max-width:1080px}
 
 /* SERVICE の下のサンプル（架空のお店の LP） */
 .samples-head{margin-top:var(--sp-lg)}
