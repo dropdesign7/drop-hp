@@ -191,6 +191,12 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .muted{color:var(--c-muted)}
 .cap{font-size:13px;line-height:1.8}
 .cta{margin-top:var(--sp-lg)}
+/* 登録特典：先着10名の無料診断 */
+.offer{margin-top:var(--sp-lg);max-width:482px;padding:20px 22px;border-left:3px solid var(--c-main);background:var(--c-sub2)}
+.offer__tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;color:#fff;background:var(--c-main-deep);padding:3px 10px;border-radius:2px}
+.offer__title{margin-top:10px;font-size:18px;font-weight:700;line-height:1.5}
+.offer__body{margin-top:6px;font-size:14px;line-height:1.9}
+.offer + .cta{margin-top:var(--sp-md)}
 .sub-wrap{--s:1;width:100%;contain:inline-size;max-width:482px;height:calc(322px * var(--s));overflow:hidden;border:1px solid var(--c-hairline);border-radius:4px;background:var(--c-card)}
 .sub-embed{display:block;width:480px;height:320px;border:0;transform:scale(var(--s));transform-origin:0 0}
 
