@@ -91,6 +91,14 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
   .hero__chara.is-ready{animation:none;opacity:1}
   .hero__chara.is-ready .chara__arm,.hero__chara.is-ready .chara__sway{animation:none}
 }
+/* スマホ：ボタンまわりの文字が家具に重ならないよう、画面の下に床の色の帯を敷く（2026-11-20 コウノさん指定）。
+   キャラクターは帯より後ろの部品なので、足もとは隠れない */
+@media (max-width:599px){
+  .hero{isolation:isolate}
+  .hero__photo{z-index:-1}   /* 写真を帯の後ろへ */
+  .hero::before{content:"";position:absolute;inset:auto 0 0 0;height:260px;z-index:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(238,235,232,.94) 0,rgba(238,235,232,.94) 205px,rgba(238,235,232,0) 260px)}
+}
 .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%}
 /* スマホ：写真と言葉を1画面に重ねる。言葉は上の空に、ボタンはいちばん下（テラスの白い面）に */
 .hero__main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding-block:8px 20px}
@@ -106,6 +114,8 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .hero__cta{margin-top:auto}
 .hero .btn--cta,.hero .btn--cta:active{color:#fff}   /* トップのボタンは白抜き */
 .hero .btn-note{font-size:12px;margin-top:8px}
+.hero__pre{margin-bottom:12px;font-weight:700;font-size:15px;line-height:1.6;letter-spacing:.04em}   /* 登録ボタンの上の一言（2026-11-20 コウノさん指定：太めのゴシックで目に止まるように） */
+@media (min-width:600px){.sp-br{display:none}}   /* スマホだけ「つくる前に」で改行（2026-11-20 コウノさん指定） */
 .hero__row{display:flex;align-items:flex-end;gap:16px}
 .hero__row .btn{white-space:nowrap}
 @media (max-width:479px){
@@ -135,7 +145,8 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
   .hero__word{font-size:var(--word)}
   .hero h1{font-size:clamp(26px,2.5vw,36px)}
   .hero__copy{margin-top:32px}
-  .hero__cta{margin-top:28px}
+  .hero__cta{margin-top:56px}   /* リード文との間をあける（2026-11-20 コウノさん指定） */
+  .hero__pre{font-size:17px}
   .hero h1{font-size:clamp(26px,2.5vw,36px)}
 }
 
