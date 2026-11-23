@@ -94,21 +94,26 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 /* スマホ：ボタンまわりの文字が家具に重ならないよう、画面の下に床の色の帯を敷く（2026-11-20 コウノさん指定）。
    キャラクターは帯より後ろの部品なので、足もとは隠れない */
 @media (max-width:599px){
-  .hero{isolation:isolate}
-  .hero__photo{z-index:-1}   /* 写真を帯の後ろへ */
-  .hero::before{content:"";position:absolute;inset:auto 0 0 0;height:260px;z-index:0;pointer-events:none;
-    background:linear-gradient(to top,rgba(238,235,232,.94) 0,rgba(238,235,232,.94) 205px,rgba(238,235,232,0) 260px)}
+  .hero__stage{isolation:isolate}
+  .hero__photo{z-index:-1}   /* 写真を帯の後ろへ（帯はステージの中。2026-11-24、ラボへ寄る動きのために hero::before から移した） */
+  .hero__stage::before{content:"";position:absolute;inset:auto 0 0 0;height:320px;z-index:0;pointer-events:none;opacity:var(--text,1);
+    background:linear-gradient(to top,rgba(238,235,232,.94) 0,rgba(238,235,232,.94) 265px,rgba(238,235,232,0) 320px)}   /* 返信の案内と近道を足したので、帯を 260px から伸ばした（2026-11-24） */
 }
 .hero__photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%}
 /* スマホ：写真と言葉を1画面に重ねる。言葉は上の空に、ボタンはいちばん下（テラスの白い面）に */
 .hero__main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding-block:8px 20px}
 .hero__panel,.hero__copy{flex:1;display:flex;flex-direction:column}
-.hero__word{font-family:var(--ff-display);font-weight:850;font-size:min(25vw,11.5svh);line-height:.8;letter-spacing:-.068em;
-  margin:0 0 0 -.045em;user-select:none}
-.hero__word span{display:block}
-.hero__in{white-space:nowrap}
-.hero__copy{margin-top:min(24px,2.6svh)}
-.hero h1{font-size:min(6.4vw,3.3svh,34px);line-height:1.5;letter-spacing:.03em}
+/* 「DROP IN」はキャッチの英訳として小さく添えるラベル（2026-11-24 作り替え。前は特大の英字で、日本語より先に目に入っていた） */
+.hero__label{font-family:var(--ff-display);font-weight:700;font-size:13px;letter-spacing:.24em;line-height:1;display:flex;align-items:center;gap:12px}
+.hero__label::before{content:"";width:28px;height:2px;background:var(--c-main)}
+.hero__who{margin-top:10px;font-weight:700;font-size:15px;letter-spacing:.06em;color:var(--c-main-deep)}
+.hero__reply{font-weight:700}
+.hero__skip{margin-top:10px;font-size:13px}
+.hero__skip a{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.hero__skip a::after{content:" ↓"}
+.hero__copy{margin-top:0}
+/* キャッチは 2026-11-24 に 150% 以上へ（コウノさん指定）。3行に分けて組む */
+.hero h1{font-size:min(10vw,5.2svh,52px);line-height:1.32;letter-spacing:.01em}
 .hero__lead{margin-top:8px;max-width:30em;font-size:15px;line-height:1.85}
 @media (max-height:699px) and (max-width:899px){.hero__lead{display:none}}   /* 背の低い画面では、絵にかからないようリード文を省く */
 .hero__cta{margin-top:auto}
@@ -124,9 +129,8 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 /* タブレット縦：言葉のかたまりを右に寄せて、中央のキャラクターに重ねない */
 @media (min-width:600px) and (max-width:899px){
   .hero{--word:min(16vw,11.5svh)}
-  .hero__panel{align-self:flex-end;width:calc(var(--word)*2.6)}
-  .hero__word{font-size:var(--word)}
-  .hero h1{font-size:min(3.6vw,30px)}
+  .hero__panel{align-self:flex-end;width:min(48vw,420px)}   /* キャッチを大きくしたので、幅を「DROP」の字幅から切りはなした（2026-11-24） */
+  .hero h1{font-size:min(5.8vw,5.6svh,48px)}
 }
 @media (min-width:900px){
   .hero .head{position:absolute;inset:0 0 auto 0}
@@ -140,14 +144,15 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
      写真は画面いっぱいに拡大されるので、棚の右端は「横幅の49.3%」か「高さの87.7%」の大きいほう */
   .hero{--shelf:max(49.3vw,87.7svh);--edge:clamp(24px,3.5vw,64px);--room:calc(100vw - var(--shelf) - 6vw - var(--edge));
         --word:clamp(110px,min(15.5vw,27svh,calc(var(--room) / 2.6)),280px)}
-  .hero__main{flex-direction:row;justify-content:flex-end;align-items:center;max-width:none;padding-block:96px 40px;padding-right:var(--edge)}
+  .hero__main{flex-direction:row;justify-content:flex-end;align-items:center;max-width:none;padding-block:84px 24px;padding-right:var(--edge)}   /* 見比べが入ったので上下を少し詰めた（2026-11-24。前は 96px 40px） */
   .hero__panel{width:calc(var(--word)*2.6);flex:none}
-  .hero__word{font-size:var(--word)}
-  .hero h1{font-size:clamp(26px,2.5vw,36px)}
-  .hero__copy{margin-top:32px}
-  .hero__cta{margin-top:56px}   /* リード文との間をあける（2026-11-20 コウノさん指定） */
+  .hero__copy{margin-top:0}   /* 上の「DROP IN」を外したので詰めた（2026-11-24） */
+  .hero__who{font-size:16px;margin-top:12px}
+  .hero__cta{margin-top:28px}   /* 間に見比べが入ったので、11/20 の 56px から詰めた（2026-11-24） */
+  .hero .hero__reply{margin-top:12px;font-size:14px}
+  .hero .hero__reply + .btn-note{margin-top:4px}
   .hero__pre{font-size:17px}
-  .hero h1{font-size:clamp(26px,2.5vw,36px)}
+  .hero h1{font-size:clamp(40px,4vw,64px);line-height:1.28}   /* 前は clamp(26px,2.5vw,36px)。1440px で 36→57.6px（160%）（2026-11-24 コウノさん指定：150%以上） */
 }
 
 /* しずく：ページを開くと一滴落ちて、Drop. の「.」になる（動きはこことキャラクターの2箇所） */
@@ -318,3 +323,139 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .samples__title{font-size:clamp(20px,2vw,24px);font-weight:700;line-height:1.5;letter-spacing:.03em;margin-top:8px}
 .samples-head .body{margin-top:8px}
 .tiles.samples{margin-block:var(--sp-lg) var(--sp-xl)}
+
+/* ---------- 見比べ（2026-11-24） ----------
+   同じ歯医者さんの「素通りされる入口」と「立ち寄りたくなる入口」を、つまみを動かして見比べる。
+   ページの中で動きを入れるのはここだけ（ほかはキャラクターの「どうぞ」）。
+   置き場所は「ラボの中」（.lab）。下のラボへ入る動きを参照 */
+.compare{margin:0 auto;width:min(100%,360px)}
+.compare__frame{position:relative;aspect-ratio:720/773;border-radius:14px;overflow:hidden;background:var(--c-sub2);
+  box-shadow:0 1px 0 var(--c-hairline),0 18px 40px -24px rgba(27,27,27,.35);outline:1px solid var(--c-hairline);outline-offset:-1px}
+.compare__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;user-select:none;-webkit-user-drag:none}
+.compare__img--before{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.compare__handle{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 0 1px rgba(27,27,27,.18);pointer-events:none}
+.compare__handle::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;background:#fff;color:var(--c-accent);font:700 16px/1 var(--ff-display);letter-spacing:.1em;
+  box-shadow:0 4px 14px rgba(27,27,27,.22)}
+.compare__tag{position:absolute;padding:5px 9px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.04em;line-height:1.2;pointer-events:none;
+  transition:opacity .2s}
+.compare__tag--before{left:10px;bottom:10px;background:rgba(27,27,27,.72);color:#fff}
+.compare__tag--after{right:10px;top:10px;background:var(--c-main);color:var(--c-on-main)}
+.compare[data-side="after"] .compare__tag--before,.compare[data-side="before"] .compare__tag--after{opacity:0}
+.compare__range{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.compare__frame:has(.compare__range:focus-visible){outline:3px solid var(--c-main-deep);outline-offset:3px}
+.compare__cap{margin-top:10px;font-size:13px;line-height:1.7;text-align:center}
+.compare__cap small{display:block;font-size:11px;color:var(--c-muted)}
+
+/* ---------- ラボへ入る動き（2026-11-24） ----------
+   1画面目（入口）→ スクロールでカメラがモニターへ寄る → ラボの中で見比べ。
+   site.js が --zoom（拡大）・--text（入口の言葉の濃さ）・--veil（白いもや）・--lab（ラボの中身）を書きかえる。
+   .has-journey は、動きを減らす設定でない人にだけ site.js が付ける。付かなければ、ふつうに上から並ぶ */
+.hero__stage{position:absolute;inset:0}
+.hero__scroll{display:none}
+.lab{position:relative;padding-block:56px 24px;background:var(--c-sub)}
+.lab__veil{display:none}
+.lab__inner{position:relative;display:grid;gap:28px;justify-items:center}
+.lab__text{max-width:34em}
+.lab__label{font-family:var(--ff-display);font-weight:700;font-size:13px;letter-spacing:.24em;display:flex;align-items:center;gap:12px}
+.lab__label::before{content:"";width:28px;height:2px;background:var(--c-main)}
+.lab__label span{color:var(--c-main-deep)}
+.lab__title{margin-top:14px;font-size:clamp(26px,6.6vw,44px);line-height:1.35;letter-spacing:.01em}
+.lab__lead{margin-top:12px;font-size:15px;line-height:1.9}
+.lab .compare{width:min(100%,320px)}
+@media (min-width:900px){
+  .lab__inner{grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(32px,6vw,96px);justify-items:start}
+  .lab .compare{width:auto}
+  .lab .compare__frame{height:min(66svh,560px);width:auto}
+  .lab .compare__cap{text-align:left}
+}
+
+.has-journey .journey{height:420svh}   /* 動画をゆっくり進めるぶん長め（参考サイトは画面約5枚分） */
+.has-journey .journey__sticky{position:sticky;top:0;height:100svh;overflow:hidden}
+.has-journey .hero{height:100svh;min-height:0}
+.has-journey .hero__stage{transform:scale(var(--zoom,1));transform-origin:var(--fx,50%) var(--fy,50%);will-change:transform}
+.has-journey .hero__main{opacity:var(--text,1);transform:translateY(calc((1 - var(--text,1)) * -48px))}
+.has-journey .hero::after{opacity:var(--text,1)}
+.has-journey .hero__scroll{display:flex;position:absolute;z-index:1;left:50%;bottom:14px;transform:translateX(-50%);flex-direction:column;align-items:center;gap:6px;
+  font-size:12px;letter-spacing:.12em;opacity:var(--text,1);pointer-events:none}
+.has-journey .hero__scroll span{font-family:var(--ff-display);font-weight:700;font-size:10px;letter-spacing:.3em;color:var(--c-main-deep)}
+.has-journey .hero__scroll::after{content:"";width:1px;height:28px;background:currentColor;transform-origin:top;animation:scroll-line 1.8s var(--ease) infinite}
+@keyframes scroll-line{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.has-journey .lab{position:absolute;inset:0;z-index:1;display:grid;align-items:center;padding-block:76px 20px;background:none;
+  opacity:var(--lab,0);pointer-events:none}
+.has-journey .lab.is-open{pointer-events:auto}
+.has-journey .lab__veil{display:block;position:absolute;inset:0;background:rgba(255,255,255,.9);opacity:var(--veil,0)}
+/* 案内役のキャラクターは「どうぞ」と招いたあと、ラボに入るところで道をあける */
+.has-journey .chara__sway{opacity:var(--guide,1)}
+.has-journey .lab__inner{transform:translateY(calc((1 - var(--lab,0)) * 32px))}
+@media (max-width:899px){
+  .has-journey .hero__scroll{display:none}   /* スマホ・タブレットは下にボタンがあるので出さない */
+}
+@media (max-width:599px){
+  .has-journey .lab{padding-block:68px 12px}
+  .has-journey .lab__inner{gap:18px}
+  .has-journey .lab__title{font-size:26px}
+  .has-journey .lab__lead{font-size:14px;line-height:1.8}
+  .has-journey .lab .compare{width:min(100%,calc((100svh - 400px) * 720 / 773),320px)}
+}
+
+/* ---------- 入口の動画（2026-11-24） ----------
+   3Dのキャラクターがデザインラボの前で待つ画（poster）と、扉を開けて中へ入る動画（film）を重ねる。
+   動画の1コマ目が用意できたら .is-film を付けて動画を見せる。スマホでは --ox で、歩くキャラクターを追う */
+.hero .hero__poster,.hero__film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--ox,50%) 50%}
+.hero__film{opacity:0;pointer-events:none}
+.hero.is-film .hero__film{opacity:1}
+.hero.is-film .hero__poster{visibility:hidden}
+.lab__bg{display:none}
+@media (max-width:899px){
+  .hero .hero__poster,.hero__film{object-position:var(--ox,55%) 50%}
+  /* 上に言葉を重ねるので、画面の上半分に白いもやを敷く */
+  .hero::after{height:58%;background:linear-gradient(to bottom,rgba(255,255,255,.9) 0,rgba(255,255,255,.78) 55%,rgba(255,255,255,0) 100%)}
+}
+@media (min-width:600px) and (max-width:899px){
+  .hero__panel{align-self:flex-start;width:min(70vw,520px)}
+}
+@media (min-width:900px){
+  /* 入口の画の左4割は空けてあるので、言葉は左に置く */
+  .hero .hero__main{justify-content:flex-start;padding-left:clamp(24px,6vw,112px);padding-right:0}
+  .hero .hero__panel{width:min(40vw,600px)}
+  /* キャッチとリード文は上へ寄せ、ボタンまわりは下に残す（2026-11-24 コウノさん指定） */
+  .hero .hero__main{align-items:stretch;padding-top:clamp(96px,14svh,140px);padding-bottom:clamp(40px,7svh,72px)}
+  .hero .hero__panel,.hero .hero__copy{display:flex;flex-direction:column}
+  .hero .hero__panel{flex:none}
+  .hero .hero__copy{flex:1}
+  .hero .hero__cta{margin-top:auto;padding-top:28px}
+  .has-journey .hero__scroll{left:auto;right:clamp(24px,3.5vw,64px);transform:none}   /* 真ん中だとキャラクターの足もとにかかるので右下へ */
+  .hero::after{height:130px}
+}
+.has-journey .lab__bg{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:var(--veil,0)}
+@media (min-width:900px){
+  /* ラボの中：右側のキャラクターが見えるよう、白いもやは左から右へ薄くする。言葉と見比べは左に並べる */
+  .has-journey .lab__veil{background:linear-gradient(90deg,rgba(255,255,255,.95) 0,rgba(255,255,255,.9) 48%,rgba(255,255,255,0) 70%)}
+  .has-journey .lab__inner{max-width:none;margin:0;padding-left:clamp(24px,6vw,112px);grid-template-columns:minmax(0,300px) auto;gap:clamp(24px,2.4vw,40px)}
+  .has-journey .lab .compare__frame{height:min(54svh,480px)}   /* 右のキャラクターにかからない大きさ */
+  .has-journey .lab__inner{justify-content:start;grid-template-columns:minmax(0,320px) auto}
+  .has-journey .lab .compare{margin:0}   /* 左に寄せる（中央寄せだと右のキャラクターにかかる） */
+  .has-journey .lab__title{font-size:clamp(28px,2.4vw,36px)}
+}
+
+/* ---------- できること（2026-11-24） ----------
+   箱にはせず、見出しの上の罫線と文字の大小だけで4つに分ける。PC は4列、スマホは縦に積む */
+.skills{display:grid;grid-template-columns:1fr;gap:36px;margin-top:var(--sp-lg)}
+.skills__group{border-top:2px solid var(--c-accent);padding-top:18px}
+.skills h3{display:flex;align-items:baseline;gap:12px;font-size:19px;line-height:1.5;letter-spacing:.03em}
+.skills__no{font-family:var(--ff-display);font-weight:600;font-size:13px;letter-spacing:.1em;color:var(--c-main-deep)}
+.skills ul{list-style:none;margin:14px 0 0;padding:0}
+.skills li{position:relative;padding:12px 0 12px 16px;border-bottom:1px solid var(--c-hairline);font-size:15px;line-height:1.75;font-weight:500}
+.skills li::before{content:"";position:absolute;left:0;top:1.35em;width:6px;height:6px;border-radius:50%;background:var(--c-main)}
+.skills li small{display:block;margin-top:2px;font-size:13px;line-height:1.7;font-weight:400;color:var(--c-muted)}
+@media (min-width:600px){ .skills{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:44px} }
+@media (min-width:1100px){ .skills{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px} }
+
+/* SKILLS も WORKS と同じ大きな欧文に（2026-11-24 コウノさん指定）。日本語の見出しはその下に */
+.skills__title{margin-top:var(--sp-md);font-weight:700;font-size:clamp(20px,2.4vw,26px);line-height:1.55;letter-spacing:.03em}
+.skills__title + .lead{margin-top:12px}
+
+/* サンプルは SKILLS の中に入れたので、上の4列とそろえて4枚を1列に並べる（2026-11-24 コウノさん指定：SKILLS と一体化） */
+#skills .samples-head{margin-top:var(--sp-xl)}
+@media (min-width:1100px){ #skills .tiles.samples{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px} }

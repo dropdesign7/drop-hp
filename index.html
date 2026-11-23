@@ -29,9 +29,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="assets/kv-ai-lab.webp?v=1117a" media="(min-width:900px)">
-<link rel="preload" as="image" href="assets/kv-ai-lab-mobile-r.webp?v=1" media="(max-width:599px)">
-<link rel="preload" as="image" href="assets/kv-ai-lab-mobile.webp?v=1117a" media="(min-width:600px) and (max-width:899px)">
 <link rel="stylesheet" href="assets/tokens.css">
 <link rel="stylesheet" href="assets/site.css?v=1120e">
 <script type="text/javascript">
@@ -41,21 +38,23 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "zg4w2yucgf");
 </script>
+<link rel="preload" as="image" href="assets/intro/start.webp?v=1124">
 </head>
 <body>
 <a class="skip" href="#main">本文へ移動</a>
 
-<div class="hero" id="top">
-  <picture>
-    <source media="(max-width:599px)" srcset="assets/kv-ai-lab-mobile-r.webp?v=1" width="1024" height="2048">
-    <source media="(max-width:899px)" srcset="assets/kv-ai-lab-mobile.webp?v=1117a" width="1024" height="2048">
-    <img class="hero__photo" src="assets/kv-ai-lab.webp?v=1117a" width="2508" height="1411" alt="AIが出したデザイン案を並べたモニターや、図を描くロボットアーム、色見本が並ぶ白いデザインの実験室で、うさぎのこむぎを抱き、手を差し出して「ようこそ」と迎える Drop. のキャラクター" fetchpriority="high">
-  </picture>
-  <div class="hero__chara" aria-hidden="true">
-    <div class="chara__sway">
-      <img class="chara__body" src="assets/chara-body.webp?v=1117a" width="531" height="1000" alt="">
-      <img class="chara__arm" src="assets/chara-arm.webp?v=1117a" width="531" height="1000" alt="">
-    </div>
+<!-- 2026-11-24 作り替え：スクロールで「デザインラボ」の中へ案内する（参考：do Kaori さんのポートフォリオの「入口から館内へ歩く」考え方）。
+     1画面目＝ラボの入口（キャッチ）→ スクロールでカメラがモニターへ寄る → ラボの中で見比べ。
+     動きを減らす設定の人・JS が動かない環境では、ふつうに上から並ぶ（.has-journey が付かない） -->
+<div class="journey" id="top">
+ <div class="journey__sticky">
+  <div class="hero">
+  <!-- 2026-11-24：入口は3Dのキャラクターがデザインラボの前で待つ画。スクロールに合わせて、扉を開けて中へ入る動画が進む。
+       いまの intro.mp4 は仮（始まりと終わりの画をつないだだけ）。本物は research/intro-video/gen_video.py で fal に作らせて差し替える -->
+  <div class="hero__stage">
+    <img class="hero__photo hero__poster" src="assets/intro/start.webp?v=1124" width="1600" height="900"
+         alt="晴れた昼、小さな白い「DESIGN LAB」の建物の前で、うさぎのこむぎを抱いた Drop. のキャラクターが、ティールの扉へ「どうぞ」と手を差し出して待っている" fetchpriority="high">
+    <video class="hero__film" src="assets/intro/intro.mp4?v=1124" muted playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
   </div>
   <header class="wrap head">
     <a class="logo" href="./" aria-label="Drop. トップへ"><span>Drop.</span></a>
@@ -70,23 +69,51 @@
 
   <main id="main" class="wrap hero__main">
     <div class="hero__panel">
-    <p class="hero__word" aria-hidden="true">
-      <span class="hero__drop">DROP</span>
-      <span class="hero__in">IN<button class="dot is-falling" type="button" tabindex="-1" aria-hidden="true"></button></span>
-    </p>
     <div class="hero__copy">
-      <h1><span class="nb">AIでつくる、</span><span class="nb">お客さんが</span><span class="nb">立ち寄るしかけ。</span></h1>
-      <p class="hero__lead"><span class="nb">ホームページ、LP、SNS。</span><span class="nb">お客さんが足を止める入口を、</span><span class="nb">AIと、30年のデザインの目で</span><span class="nb">つくります。</span></p>
+      <h1><span class="nb">AIでつくる、</span><br><span class="nb">お客さんが</span><br><span class="nb">立ち寄るしかけ。</span></h1>
+      <p class="hero__lead">ホームページ、LP、SNS。<br>お客さんが足を止める入口を、<br>AIと、30年のデザインの目でつくります。</p>
       <div class="hero__cta">
         <p class="hero__pre">つくる前に<br class="sp-br">知っておくと、ラクになる話を。</p>
         <div class="hero__row">
           <a class="btn btn--cta" href="#letters">無料メールを受け取る</a>
         </div>
+        <p class="btn-note hero__reply">相談も、届いたメールへの返信からどうぞ。</p>
         <p class="btn-note">登録した方の先着10名に、ホームページの無料診断をしています。</p>
+        <p class="hero__skip"><a href="#works">実績を先に見る</a></p>
       </div>
     </div>
     </div>
   </main>
+  <p class="hero__scroll" aria-hidden="true"><span>SCROLL</span>ラボの中へ</p>
+  </div>
+
+  <!-- ラボの中：見比べ。同じ歯医者さんの、素通りされる入口と、立ち寄りたくなる入口 -->
+  <section class="lab" aria-labelledby="lab-title">
+   <img class="lab__bg" src="assets/intro/end.webp?v=1124" width="1600" height="900" alt="" loading="lazy">
+   <div class="lab__veil" aria-hidden="true"></div>
+   <div class="wrap lab__inner">
+    <div class="lab__text">
+      <p class="lab__label">DESIGN LAB <span>01</span></p>
+      <h2 class="lab__title" id="lab-title"><span class="nb">同じ歯医者さん。</span><br><span class="nb">入口だけ、ちがう。</span></h2>
+      <p class="lab__lead"><span class="nb">中身は同じでも、</span><span class="nb">最初の1画面で「何の医院か」</span><span class="nb">「どんな良さがあるか」が</span><span class="nb">伝わるかどうかで、</span><br><span class="nb">立ち寄る人は変わります。</span></p>
+    </div>
+      <figure class="compare" id="compare" style="--pos:50%">
+        <div class="compare__frame">
+          <img class="compare__img" src="assets/compare/sorairo-after.webp?v=1124" width="720" height="773"
+               alt="立ち寄りたくなる入口：最初に「はじめての歯医者さんへ」「治療の前に、まずはお話から。」と大きく書き、説明してから治療すること・痛みをおさえる工夫・キッズスペースを一目で伝えている">
+          <img class="compare__img compare__img--before" src="assets/compare/sorairo-before.webp?v=1124" width="720" height="773"
+               alt="素通りされる入口：写真の上に「地域の皆さまの笑顔のために」とだけあり、何の医院か、どんな良さがあるかは、下の薄い文字の長いあいさつ文を読まないと分からない">
+          <span class="compare__tag compare__tag--before" aria-hidden="true">素通り</span>
+          <span class="compare__tag compare__tag--after" aria-hidden="true">立ち寄りたくなる</span>
+          <span class="compare__handle" aria-hidden="true"></span>
+          <input class="compare__range" type="range" min="0" max="100" value="50"
+                 aria-label="見比べ。左に動かすと立ち寄りたくなる入口、右に動かすと素通りされる入口が広く見えます">
+        </div>
+        <figcaption class="compare__cap">左右に動かして、見比べてください。<small>※架空のお店（町の歯医者さん）を想定したサンプルです。</small></figcaption>
+      </figure>
+   </div>
+  </section>
+ </div>
 </div>
 
 <section class="sec" id="about">
@@ -95,8 +122,8 @@
     <div class="g-main">
       <h2 class="h2"><span class="nb">いい商品なのに、</span><span class="nb">素通りされる。</span><br><span class="nb">それは、入口の問題</span><span class="nb">かもしれません。</span></h2>
       <div class="body">
-        <p>ホームページを開いた人も、SNSを流し見する人も、足を止めるのは一瞬です。その一瞬に、何を見せて、何を削るか。</p>
-        <p>Drop. は、AIの速さと、30年つづけてきたデザインの判断を組み合わせて、小さな会社の集客を手伝っています。お客さんが思わず立ち寄る「しかけ」を、いっしょにつくります。</p>
+        <p><span class="nb">ホームページを開いた人も、</span><span class="nb">SNSを流し見する人も、</span><span class="nb">足を止めるのは一瞬です。</span><br><span class="nb">その一瞬に、</span><span class="nb">何を見せて、</span><span class="nb">何を削るか。</span></p>
+        <p><span class="nb">Drop. は、</span><span class="nb">AIの速さと、</span><span class="nb">30年つづけてきた</span><span class="nb">デザインの判断を組み合わせて、</span><span class="nb">小さな会社の集客を手伝っています。</span><br><span class="nb">お客さんが思わず立ち寄る「しかけ」を、</span><span class="nb">いっしょにつくります。</span></p>
       </div>
       <dl class="rows">
         <div><dt>目を止める</dt><dd>SNSの投稿・バナー・サムネイル。AIで何案も試して、最初の1秒で「自分に関係がある」と分かる1枚を選びます。</dd></div>
@@ -104,6 +131,85 @@
         <div><dt>また来てもらう</dt><dd>メール・SNSの発信。AIで続けやすい型をつくり、思い出してもらえる回数を増やします。</dd></div>
       </dl>
     </div>
+  </div>
+</section>
+
+<!-- できること（2026-11-24 追加：実績の前）。手持ちのスキルで実際にできることを、お客さん向けの言葉で。道具の名前は出さない（renewal-skeleton.md の 4.） -->
+<section class="sec" id="skills">
+  <div class="wrap g">
+    <div class="g-rail"><p class="label">WHAT I CAN DO</p></div>
+    <div class="g-main">
+      <h2 class="big">SKILLS</h2>
+      <p class="skills__title"><span class="nb">入口づくりで、</span><span class="nb">頼めること。</span></p>
+      <p class="body lead"><span class="nb">作るところから、</span><span class="nb">直すところ、</span><span class="nb">社内に残すところまで。</span><br><span class="nb">AIの道具を自分で組んで、</span><span class="nb">30年のデザインの目で仕上げます。</span></p>
+    </div>
+    <div class="g-full skills">
+      <section class="skills__group" aria-labelledby="sk-1">
+        <h3 id="sk-1"><span class="skills__no">01</span>入口をつくる</h3>
+        <ul>
+          <li>ホームページ・LPの制作<small>構成・文章・デザイン・公開まで</small></li>
+          <li>作る前に、構成案を3パターン<small>選びやすい提案書つきで</small></li>
+          <li>バナー・サムネイル・<span class="nb">ポスター・チラシ</span></li>
+          <li>Instagram の<span class="nb">プロフィールの見直し、</span><span class="nb">投稿画像・カルーセル、</span><span class="nb">リールの台本</span></li>
+          <li>15〜60秒の広告映像、<span class="nb">SNS用のショート動画</span><small>企画から編集まで</small></li>
+        </ul>
+      </section>
+      <section class="skills__group" aria-labelledby="sk-2">
+        <h3 id="sk-2"><span class="skills__no">02</span>流れをつなぐ</h3>
+        <ul>
+          <li>お客さんが何で迷っているかを整理して、見せる順番を決める</li>
+          <li>メールの読者を集めるしくみ<small>無料特典・登録ページ・登録後のメール</small></li>
+          <li>ブランド一式<small>ロゴ、ブランドガイド、Instagram 投稿テンプレート10枚、発信テーマ30本、LP・HP</small></li>
+        </ul>
+      </section>
+      <section class="skills__group" aria-labelledby="sk-3">
+        <h3 id="sk-3"><span class="skills__no">03</span>見立てて直す</h3>
+        <ul>
+          <li>デザインの健康診断<small><span class="nb">7項目・100点満点で採点して、</span><span class="nb">直す順番を出す</span></small></li>
+          <li>いまのホームページの診断<small>直す前と後を見比べられる診断書つき</small></li>
+          <li>公開前のチェック<small><span class="nb">表示が崩れていないか、</span><span class="nb">検索に拾われるか</span></small></li>
+          <li>競合や参考デザインの読み解き<small>なぜ効いているのかを言葉に</small></li>
+        </ul>
+      </section>
+      <section class="skills__group" aria-labelledby="sk-4">
+        <h3 id="sk-4"><span class="skills__no">04</span>社内に残す</h3>
+        <ul>
+          <li>AIの使い方と、デザインを判断する「ものさし」を、3か月で社内に残す伴走</li>
+        </ul>
+      </section>
+    </div>
+    <!-- サンプル：できることの実例として、SKILLS の中に置く（2026-11-24 コウノさん指定。前は SERVICE の中） -->
+    <div class="g-main samples-head" id="samples">
+      <p class="label">SAMPLE</p>
+      <h3 class="samples__title">たとえば、こんな入口をつくれます</h3>
+      <p class="body"><span class="nb">架空のお店を想定してつくった LP・HP のサンプルです。</span><br><span class="nb">押すと、ページ全体を見られます。</span></p>
+    </div>
+    <div class="g-full tiles samples"><!-- samples -->
+      <figure class="tile">
+        <a class="tile__link" href="work-auberge.html">
+          <div class="mat"><img src="assets/works/ab-cover.webp" width="857" height="1500" alt="AUBERGE AONOMA LP｜海を見渡す大人のプチホテル" loading="lazy"></div>
+          <figcaption><b>AUBERGE AONOMA</b><span>LP｜海を見渡す大人のプチホテル</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
+        </a>
+      </figure>
+      <figure class="tile">
+        <a class="tile__link" href="work-sorairo.html">
+          <div class="mat"><img src="assets/works/sr-cover.webp" width="857" height="1500" alt="そらいろ歯科 LP｜町の歯医者さん" loading="lazy"></div>
+          <figcaption><b>そらいろ歯科</b><span>LP｜町の歯医者さん</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
+        </a>
+      </figure>
+      <figure class="tile">
+        <a class="tile__link" href="work-nagomichaya.html">
+          <div class="mat"><img src="assets/works/ng-cover.webp" width="780" height="1365" alt="なごみ茶屋 LP｜山あいの小さなお茶屋さん" loading="lazy"></div>
+          <figcaption><b>なごみ茶屋</b><span>LP｜山あいの小さなお茶屋さん</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
+        </a>
+      </figure>
+      <figure class="tile">
+        <a class="tile__link" href="work-yamaguchishiki.html">
+          <div class="mat"><img src="assets/works/ys-cover.webp" width="1200" height="660" alt="やまぐち紙器 LP｜山口の小さな紙箱工房" loading="lazy"></div>
+          <figcaption><b>やまぐち紙器</b><span>LP｜山口の小さな紙箱工房</span><span class="tile__note">※架空の会社を想定したサンプルです</span></figcaption>
+        </a>
+      </figure>
+    <!-- /samples --></div>
   </div>
 </section>
 
@@ -207,7 +313,7 @@
     <div class="g-rail"><p class="label">SERVICE</p></div>
     <div class="g-main">
       <h2 class="h2"><span class="nb">AIとデザインで、</span><span class="nb">集客の入口をつくります。</span></h2>
-      <p class="body lead">お客さんが最初に目にするところを、AIの速さと、30年のデザインの判断で整えます。進め方は、この4つです。</p>
+      <p class="body lead"><span class="nb">お客さんが最初に目にするところを、</span><span class="nb">AIの速さと、</span><span class="nb">30年のデザインの判断で整えます。</span><br><span class="nb">進め方は、この4つです。</span></p>
     </div>
     <ol class="g-full flow">
         <li class="flow__step">
@@ -239,37 +345,6 @@
           </div>
         </li>
     </ol>
-    <div class="g-main samples-head" id="samples">
-      <p class="label">SAMPLE</p>
-      <h3 class="samples__title">たとえば、こんな入口</h3>
-      <p class="body"><span class="nb">架空のお店を想定してつくった LP・HP のサンプルです。</span><br><span class="nb">押すと、ページ全体を見られます。</span></p>
-    </div>
-    <div class="g-full tiles samples"><!-- samples -->
-      <figure class="tile">
-        <a class="tile__link" href="work-auberge.html">
-          <div class="mat"><img src="assets/works/ab-cover.webp" width="857" height="1500" alt="AUBERGE AONOMA LP｜海を見渡す大人のプチホテル" loading="lazy"></div>
-          <figcaption><b>AUBERGE AONOMA</b><span>LP｜海を見渡す大人のプチホテル</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
-        </a>
-      </figure>
-      <figure class="tile">
-        <a class="tile__link" href="work-sorairo.html">
-          <div class="mat"><img src="assets/works/sr-cover.webp" width="857" height="1500" alt="そらいろ歯科 LP｜町の歯医者さん" loading="lazy"></div>
-          <figcaption><b>そらいろ歯科</b><span>LP｜町の歯医者さん</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
-        </a>
-      </figure>
-      <figure class="tile">
-        <a class="tile__link" href="work-nagomichaya.html">
-          <div class="mat"><img src="assets/works/ng-cover.webp" width="780" height="1365" alt="なごみ茶屋 LP｜山あいの小さなお茶屋さん" loading="lazy"></div>
-          <figcaption><b>なごみ茶屋</b><span>LP｜山あいの小さなお茶屋さん</span><span class="tile__note">※架空のお店を想定したサンプルです</span></figcaption>
-        </a>
-      </figure>
-      <figure class="tile">
-        <a class="tile__link" href="work-yamaguchishiki.html">
-          <div class="mat"><img src="assets/works/ys-cover.webp" width="1200" height="660" alt="やまぐち紙器 LP｜山口の小さな紙箱工房" loading="lazy"></div>
-          <figcaption><b>やまぐち紙器</b><span>LP｜山口の小さな紙箱工房</span><span class="tile__note">※架空の会社を想定したサンプルです</span></figcaption>
-        </a>
-      </figure>
-    <!-- /samples --></div>
     <div class="g-main">
       <dl class="rows rows--plus">
         <div><dt>プラスアルファ</dt><dd>紙のデザインも、あわせて頼めます。会社案内・パンフレット・チラシ・ロゴ・書籍の装丁。Webと紙で、見た目をそろえたいときに。</dd></div>

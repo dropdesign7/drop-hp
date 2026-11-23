@@ -18,7 +18,7 @@ document.querySelectorAll('.dot').forEach((dot) => {
   const spots = {
     pc: { iw: 2508, ih: 1411, box: [470, 512, 391, 736] },
     sp: { iw: 1024, ih: 2048, box: [645, 1191, 277, 522] },   // スマホ：棚の右、床の上
-    tab: { iw: 1024, ih: 2048, box: [210, 1191, 277, 522] },  // タブレット：右に文字があるので棚の前
+    tab: { iw: 1024, ih: 2048, box: [150, 1191, 277, 522] },  // タブレット：右に文字があるので棚の前（キャッチを大きくしたので 210→150 に左へ。2026-11-24）
   };
   const place = () => {
     const src = photo.currentSrc || photo.src;
@@ -81,4 +81,101 @@ document.querySelectorAll('.dot').forEach((dot) => {
   align();
   if (document.fonts) document.fonts.ready.then(align);
   addEventListener('resize', align);
+})();
+
+// 見比べ（2026-11-24）：つまみで「素通りされる入口」と「立ち寄りたくなる入口」を見比べる。
+const compare = (() => {
+  const fig = document.getElementById('compare');
+  if (!fig) return null;
+  const range = fig.querySelector('.compare__range');
+  let touched = false;
+  const set = (v) => {
+    fig.style.setProperty('--pos', `${v}%`);
+    fig.dataset.side = v < 15 ? 'after' : v > 85 ? 'before' : '';
+    range.value = Math.round(v);
+  };
+  range.addEventListener('input', () => { touched = true; set(+range.value); });
+  // マウスでは、枠の上を動かすだけでつまみがついてくる（押さなくても見比べられる）
+  fig.querySelector('.compare__frame').addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    const r = e.currentTarget.getBoundingClientRect();
+    touched = true;
+    set(Math.max(0, Math.min(100, ((e.clientX - r.left) / r.width) * 100)));
+  });
+  return { set, touched: () => touched };
+})();
+
+// ラボへ入る動き（2026-11-24。参考：do Kaori さんのトップの「スクロールで動画を一コマずつ進める」しくみ）
+// 入口：3Dのキャラクターがデザインラボの前で待つ → スクロールに合わせて動画が進み、扉を開けて中へ → ラボの中で見比べ。
+// 動きを減らす設定の人・入口の言葉が1画面に収まらない画面では、動かさずにふつうに並べる。
+(() => {
+  const journey = document.querySelector('.journey');
+  const hero = journey && journey.querySelector('.hero');
+  const film = hero && hero.querySelector('.hero__film');
+  const lab = journey && journey.querySelector('.lab');
+  const main = hero && hero.querySelector('.hero__main');
+  if (!journey || !hero || !film || !lab || !main) return;
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) { film.removeAttribute('src'); film.load(); return; }
+
+  const root = document.documentElement;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const seg = (p, a, b) => clamp((p - a) / (b - a));
+  const ease = (x) => 1 - Math.pow(1 - x, 3);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const sp = matchMedia('(max-width:599px)'), tab = matchMedia('(min-width:600px) and (max-width:899px)');
+
+  // ---- 動画：スクロールした量に合わせて currentTime を動かす（再生はしない） ----
+  let ready = false, want = 0;
+  const seek = () => {
+    if (!ready || film.seeking || !Number.isFinite(film.duration)) return;
+    if (Math.abs(film.currentTime - want) > 0.02) { try { film.currentTime = want; } catch (e) { /* 読み込み前はあとで */ } }
+  };
+  const onFrame = () => { if (film.readyState >= 2) { ready = true; hero.classList.add('is-film'); seek(); } };
+  ['loadeddata', 'canplay'].forEach((t) => film.addEventListener(t, onFrame));
+  film.addEventListener('seeked', seek);
+  film.addEventListener('play', () => { if (!priming) film.pause(); });
+  // Safari（とくに iPhone）は、一度だけ無音で再生しておかないとコマ送りに応じないので、最初の操作で準備する
+  let priming = false;
+  const prime = () => {
+    if (priming || ready) return;
+    priming = true;
+    Promise.resolve(film.play()).then(() => { film.pause(); priming = false; onFrame(); }, () => { priming = false; });
+  };
+  ['touchstart', 'pointerdown', 'keydown', 'wheel'].forEach((t) => addEventListener(t, prime, { passive: true, once: true }));
+  onFrame();
+
+  // ---- スクロールの進み具合 → 動画・文字・ラボ ----
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const total = journey.offsetHeight - innerHeight;
+    const p = total > 0 ? clamp(-journey.getBoundingClientRect().top / total) : 0;
+    const walk = seg(p, 0.03, 0.62);                 // 動画の進み（0〜1）
+    if (Number.isFinite(film.duration)) { want = walk * (film.duration - 0.05); seek(); }
+    const text = 1 - ease(seg(p, 0.02, 0.18));       // 入口の言葉が消える
+    const open = ease(seg(p, 0.6, 0.74));            // ラボの中身が現れる
+    const st = journey.style;
+    st.setProperty('--text', text.toFixed(3));
+    st.setProperty('--veil', open.toFixed(3));
+    st.setProperty('--lab', open.toFixed(3));
+    // スマホ・タブレットは横長の動画の一部しか見えないので、歩くキャラクターを追って見る位置をずらす
+    st.setProperty('--ox', sp.matches ? `${lerp(53, 88, walk)}%` : tab.matches ? `${lerp(56, 86, walk)}%` : '50%');
+    lab.classList.toggle('is-open', open > 0.5);
+    lab.inert = open < 0.5;
+    main.inert = text < 0.5;
+    // ラボに入ったあとは、スクロールに合わせてつまみが左右に一往復する（自分で触ったら止める）
+    if (compare && !compare.touched()) compare.set(50 + 34 * Math.sin(seg(p, 0.76, 0.97) * Math.PI * 2));
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  const fits = () => {
+    root.classList.add('has-journey');
+    const ok = main.scrollHeight <= hero.clientHeight + 1 && main.getBoundingClientRect().bottom <= innerHeight + 1;
+    root.classList.toggle('has-journey', ok);
+    if (!ok) { main.inert = false; lab.inert = false; ['--text', '--veil', '--lab', '--ox'].forEach((k) => journey.style.removeProperty(k)); }
+    return ok;
+  };
+  addEventListener('scroll', () => { if (root.classList.contains('has-journey')) onScroll(); }, { passive: true });
+  addEventListener('resize', () => { if (fits()) onScroll(); });
+  if (document.fonts) document.fonts.ready.then(() => { if (fits()) onScroll(); });
+  if (fits()) update();
 })();
