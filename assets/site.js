@@ -179,3 +179,28 @@ const compare = (() => {
   if (document.fonts) document.fonts.ready.then(() => { if (fits()) onScroll(); });
   if (fits()) update();
 })();
+
+// スマホの入口（2026-11-24）：キャッチの下からボタンの上までを、入口の画の場所にする（人物と文字を重ねない）
+(() => {
+  const hero = document.querySelector('.hero');
+  const main = hero && hero.querySelector('.hero__main');
+  const cta = hero && hero.querySelector('.hero__cta');
+  if (!hero || !main || !cta) return;
+  const sp = matchMedia('(max-width:599px)');
+  const layout = () => {
+    if (!sp.matches) { hero.style.removeProperty('--st'); hero.style.removeProperty('--sb'); return; }
+    const h = hero.getBoundingClientRect();
+    const m = main.getBoundingClientRect();
+    const shift = m.top - (h.top + main.offsetTop);   // スクロールで文字が上へずれているぶんを戻して測る
+    const lead = hero.querySelector('.hero__lead');
+    const upper = lead && lead.offsetParent !== null && getComputedStyle(lead).display !== 'none' ? lead : hero.querySelector('h1');
+    const top = upper.getBoundingClientRect().bottom - shift - h.top + 8;
+    const bottom = h.bottom - (cta.getBoundingClientRect().top - shift) + 4;
+    hero.style.setProperty('--st', `${Math.round(top)}px`);
+    hero.style.setProperty('--sb', `${Math.round(bottom)}px`);
+  };
+  layout();
+  addEventListener('resize', layout);
+  if (document.fonts) document.fonts.ready.then(layout);
+  addEventListener('load', layout);
+})();

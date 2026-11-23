@@ -463,3 +463,13 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 /* ABOUT の3つのしかけ（2026-11-24）：SERVICE と同じ図解の形で、3列 */
 .about-flow{margin-block:var(--sp-xl) 0}
 @media (min-width:900px){ .flow--3{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px} .flow--3 .flow__step:not(:last-child) .flow__fig::after{right:-40px;width:40px} }
+
+/* ---------- スマホの入口：文字と人物を重ねない（2026-11-24 コウノさん指定） ----------
+   上にキャッチ、まん中に入口の画（人物）、下にボタン。画の上下の位置は site.js が文字とボタンの位置から決める（--st・--sb）。
+   スクロールで入口の文字が消えるにつれて、画は画面いっぱいに広がる */
+@media (max-width:599px){
+  .hero{background:var(--c-sub)}
+  .hero::after{display:none}
+  .hero__stage::before{display:none}
+  .hero .hero__stage{top:calc(var(--st,44%) * var(--text,1));bottom:calc(var(--sb,34%) * var(--text,1))}
+}
