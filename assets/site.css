@@ -459,3 +459,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 /* サンプルは SKILLS の中に入れたので、上の4列とそろえて4枚を1列に並べる（2026-11-24 コウノさん指定：SKILLS と一体化） */
 #skills .samples-head{margin-top:var(--sp-xl)}
 @media (min-width:1100px){ #skills .tiles.samples{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:24px} }
+
+/* ABOUT の3つのしかけ（2026-11-24）：SERVICE と同じ図解の形で、3列 */
+.about-flow{margin-block:var(--sp-xl) 0}
+@media (min-width:900px){ .flow--3{grid-template-columns:repeat(3,minmax(0,1fr));gap:40px} .flow--3 .flow__step:not(:last-child) .flow__fig::after{right:-40px;width:40px} }
