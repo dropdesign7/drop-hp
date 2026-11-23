@@ -472,4 +472,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
   .hero::after{display:none}
   .hero__stage::before{display:none}
   .hero .hero__stage{top:calc(var(--st,44%) * var(--text,1));bottom:calc(var(--sb,34%) * var(--text,1))}
+  /* 画の上の端を白い地にとかして、タイトルと画をひと続きに見せる（文字が消えたら、とかしも消える） */
+  .hero__stage::after{content:"";position:absolute;inset:0 0 auto 0;height:38%;z-index:1;pointer-events:none;opacity:var(--text,1);
+    background:linear-gradient(to bottom,var(--c-sub) 0,rgba(255,255,255,.75) 35%,rgba(255,255,255,0) 100%)}
 }

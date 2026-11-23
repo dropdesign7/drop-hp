@@ -194,8 +194,12 @@ const compare = (() => {
     const shift = m.top - (h.top + main.offsetTop);   // スクロールで文字が上へずれているぶんを戻して測る
     const lead = hero.querySelector('.hero__lead');
     const upper = lead && lead.offsetParent !== null && getComputedStyle(lead).display !== 'none' ? lead : hero.querySelector('h1');
-    const top = upper.getBoundingClientRect().bottom - shift - h.top + 8;
-    const bottom = h.bottom - (cta.getBoundingClientRect().top - shift) + 4;
+    // 画の上のほう（壁と空）にタイトルを重ねて一体に見せる。人物の頭（画の高さの約22〜24%の位置。余裕を見て27%で計算）はタイトルより下に来るようにする（2026-11-24 コウノさん指定）
+    const HEAD = 0.27;   // 少し余裕を持たせる
+    const textBottom = upper.getBoundingClientRect().bottom - shift - h.top + 6;
+    const ctaTop = cta.getBoundingClientRect().top - shift - h.top - 4;
+    const top = Math.max(0, (textBottom - HEAD * ctaTop) / (1 - HEAD));
+    const bottom = h.height - ctaTop;
     hero.style.setProperty('--st', `${Math.round(top)}px`);
     hero.style.setProperty('--sb', `${Math.round(bottom)}px`);
   };
