@@ -443,7 +443,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
    箱にはせず、見出しの上の罫線と文字の大小だけで4つに分ける。PC は4列、スマホは縦に積む */
 .skills{display:grid;grid-template-columns:1fr;gap:36px;margin-top:var(--sp-lg)}
 .skills__group{border-top:2px solid var(--c-accent);padding-top:18px}
-.skills h3{display:flex;align-items:baseline;gap:12px;font-size:19px;line-height:1.5;letter-spacing:.03em}
+.skills h3{display:flex;align-items:center;gap:12px;font-size:19px;line-height:1.5;letter-spacing:.03em}
 .skills__no{font-family:var(--ff-display);font-weight:600;font-size:13px;letter-spacing:.1em;color:var(--c-main-deep)}
 .skills ul{list-style:none;margin:14px 0 0;padding:0}
 .skills li{position:relative;padding:12px 0 12px 16px;border-bottom:1px solid var(--c-hairline);font-size:15px;line-height:1.75;font-weight:500}
@@ -476,3 +476,5 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
   .hero__stage::after{content:"";position:absolute;inset:0 0 auto 0;height:38%;z-index:1;pointer-events:none;opacity:var(--text,1);
     background:linear-gradient(to bottom,var(--c-sub) 0,rgba(255,255,255,.75) 35%,rgba(255,255,255,0) 100%)}
 }
+/* SKILLS のアイコン（2026-11-24 コウノさん指定）：線だけの小さな絵。見出しの上に置き、番号と同じ深い色で静かに */
+.skills__icon{flex:none;width:32px;height:32px;color:var(--c-main-deep)}   /* 見出しの文字の前に置く（2026-11-24 番号の代わり） */
