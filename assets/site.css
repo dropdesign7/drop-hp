@@ -60,7 +60,7 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .btn:hover::after{transform:translateX(4px)}
 .btn:active{transform:translateY(0)}
 /* ボタンはブランドのメイン色（ドロップティール）。文字はインクブラック（白はコントラスト不足のため使わない） */
-.btn--cta{background:var(--c-main);color:var(--c-on-main)}
+.btn--cta{background:var(--c-main);color:#fff}   /* 緑のボタンの文字は白抜きで統一（2026-11-24 コウノさん指定。前は --c-on-main の濃い色） */
 .btn--cta:active{background:var(--c-main-deep);color:var(--c-sub)}
 .btn-note{margin-top:14px;font-size:13px;line-height:1.8}
 
@@ -213,8 +213,19 @@ ul,ol,dl,dd{margin:0;padding:0;list-style:none}
 .offer__title{margin-top:10px;font-size:18px;font-weight:700;line-height:1.5}
 .offer__body{margin-top:6px;font-size:14px;line-height:1.9}
 .offer + .cta{margin-top:var(--sp-md)}
-.sub-wrap{--s:1;width:100%;contain:inline-size;max-width:482px;height:calc(322px * var(--s));overflow:hidden;border:1px solid var(--c-hairline);border-radius:4px;background:var(--c-card)}
-.sub-embed{display:block;width:480px;height:320px;border:0;transform:scale(var(--s));transform-origin:0 0}
+/* 埋め込みが開けない端末向けの逃げ道（2026-11-24。高さも 320→390px にして、中の縦スクロールを消した） */
+.sub-alt{margin-top:12px;font-size:14px;line-height:1.8}
+.sub-alt a{font-weight:700;text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.sub-alt a::after{content:" ↗";font-weight:500}
+/* サンプルを見終わったところの、無料診断への案内（2026-11-24 シモンさんの助言） */
+.ask{max-width:560px;padding:24px 26px;background:var(--c-sub2);margin-bottom:var(--sp-xl)}
+.ask__lead{font-size:clamp(17px,1.6vw,19px);font-weight:700;line-height:1.6}
+.ask__body{margin-top:6px;font-size:14px;line-height:1.9}
+.ask .btn{margin-top:16px;white-space:nowrap}
+@media (max-width:479px){ .ask{padding:20px 18px} .ask .btn{padding-inline:24px} }
+.page-body .ask{margin-top:0}
+.sub-wrap{--s:1;width:100%;contain:inline-size;max-width:482px;height:calc(392px * var(--s));overflow:hidden;border:1px solid var(--c-hairline);border-radius:4px;background:var(--c-card)}
+.sub-embed{display:block;width:480px;height:390px;border:0;transform:scale(var(--s));transform-origin:0 0}
 
 /* 2列の表（しかけ・経歴・頼めること）。左2列＝項目、右6列＝説明 */
 .rows{margin-top:var(--sp-xl);border-top:1px solid var(--c-hairline)}

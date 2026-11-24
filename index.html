@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/tokens.css">
-<link rel="stylesheet" href="assets/site.css?v=1120e">
+<link rel="stylesheet" href="assets/site.css?v=1124e">
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -63,7 +63,7 @@
       <a class="nav__sec" href="#service">SERVICE</a>
       <a class="nav__sec" href="#works">WORKS</a>
       <a class="nav__sec" href="#profile">PROFILE</a>
-      <a class="nav__mail" href="#letters">無料メール</a>
+      <a class="nav__mail" href="#letters">無料診断</a>
     </nav>
   </header>
 
@@ -73,12 +73,13 @@
       <h1><span class="nb">AIでつくる、</span><br><span class="nb">お客さんが</span><br><span class="nb">立ち寄るしかけ。</span></h1>
       <p class="hero__lead">ホームページ、LP、SNS。<br>お客さんが足を止める入口を、<br>AIと、30年のデザインの目でつくります。</p>
       <div class="hero__cta">
-        <p class="hero__pre">つくる前に<br class="sp-br">知っておくと、ラクになる話を。</p>
+        <!-- 2026-11-24 シモンさんの助言で、無料診断を主役に（前は「無料メールを受け取る」が主役で、診断は下の注記だけ） -->
+        <p class="hero__pre">ホームページはあるのに、<br class="sp-br">問い合わせが少ない方へ。</p>
         <div class="hero__row">
-          <a class="btn btn--cta" href="#letters">無料メールを受け取る</a>
+          <a class="btn btn--cta" href="#letters">無料診断を申し込む</a>
         </div>
-        <p class="btn-note hero__reply">相談も、届いたメールへの返信からどうぞ。</p>
-        <p class="btn-note">登録した方の先着10名に、ホームページの無料診断をしています。</p>
+        <p class="btn-note hero__reply">最初にどこを直すかを、診断書に。先着10名・無料。</p>
+        <p class="btn-note">無料メールに登録すると、届いたメールから申し込めます。</p>
         <p class="hero__skip"><a href="#works">実績を先に見る</a></p>
       </div>
     </div>
@@ -220,6 +221,12 @@
         </a>
       </figure>
     <!-- /samples --></div>
+    <!-- サンプルを見て「うちだったら？」と思ったところで、診断へ（2026-11-24 シモンさんの助言） -->
+    <div class="g-main ask">
+      <p class="ask__lead"><span class="nb">「うちだったら、どうだろう？」</span><span class="nb">と思ったら。</span></p>
+      <p class="ask__body"><span class="nb">いまのホームページのトップページを見て、</span><br><span class="nb">最初にどこを直すかを診断書にします。</span><br>先着10名まで無料です。</p>
+      <a class="btn btn--cta" href="#letters">無料診断の案内を見る</a>
+    </div>
   </div>
 </section>
 
@@ -370,18 +377,21 @@
     <div class="g-rail"><p class="label">LETTERS</p></div>
     <div class="g-main">
       <p class="big" aria-hidden="true">LETTERS</p>
-      <h2 class="h2 after-big"><span class="nb">つくる前に知っておくと、</span><span class="nb">ラクになる話を。</span></h2>
-      <p class="body lead">デザインとAIの、すぐ試せる話をメールで届けます。読むだけでも、相談の入口としても。</p>
+      <!-- 2026-11-24 シモンさんの助言で、無料診断を主役に。メールは申し込みの通り道として後ろへ -->
+      <h2 class="h2 after-big"><span class="nb">最初にどこを直すか、</span><span class="nb">無料で診断します。</span></h2>
+      <p class="body lead"><span class="nb">ホームページはあるのに、</span><span class="nb">問い合わせが少ないと感じている方へ。</span><br><span class="nb">トップページを拝見して、</span><span class="nb">最初にどこを直すかを、</span><span class="nb">その理由と一緒に診断書にまとめます。</span></p>
       <div class="offer">
-        <p class="offer__tag">先着10名</p>
-        <p class="offer__title">ホームページの無料診断</p>
-        <p class="offer__body">登録すると届くメールから申し込めます。あなたのサイトのトップページを Drop. が見て、直すと効くところを診断書にしてお返しします。</p>
+        <p class="offer__tag">先着10名・無料</p>
+        <p class="offer__title">申し込みは、無料メールから</p>
+        <p class="offer__body">下のフォームで無料メールに登録すると、届いたメールから申し込めます。メールでは、つくる前に知っておくとラクになる、デザインとAIの話も届けます。</p>
       </div>
       <div class="cta">
         <div class="sub-wrap"><iframe class="sub-embed" src="https://dropdesign.substack.com/embed" title="無料メールの登録フォーム（Substack）" loading="lazy" scrolling="no"></iframe></div>
         <script>
           (function(){var w=document.querySelector('.sub-wrap');function fit(){w.style.setProperty('--s',Math.min(1,(w.clientWidth)/480))}fit();addEventListener('resize',fit)})();
         </script>
+        <!-- 端末によっては埋め込みが「Site Unavailable」になる報告があった（2026-11-24）。登録ページを直接開ける逃げ道 -->
+        <p class="sub-alt">登録欄が表示されないときは、<a href="https://dropdesign.substack.com/subscribe" target="_blank" rel="noopener">登録ページを開く</a></p>
         <p class="btn-note muted">配信は Substack を使っています。いつでも解除できます。</p>
       </div>
     </div>
